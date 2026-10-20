@@ -1,0 +1,47 @@
+TASKBOOK — STUDENT TASK ORGANIZER
+=================================
+
+This folder is the complete website. Full instructions are in README.md.
+Quick version:
+
+1. FIREBASE (database + login)
+   - Create a project at https://console.firebase.google.com
+   - Add a Web app and copy its config into:  js/firebase-config.js
+   - Authentication > Sign-in method: turn on Email/Password and Google
+   - Firestore Database > Create database (production mode)
+   - Firestore > Rules: paste ALL of firestore.rules, then click Publish
+
+2. YOUR DETAILS
+   - In privacy.html AND about.html, replace everything in [square brackets]
+     (your name, email, course/section and school)
+   - Optional: put your photo in the images folder named  creator.jpg
+
+3. GITHUB PAGES (hosting)
+   - Make a PUBLIC repository and upload everything in this folder
+     (keep the css, js and images folders)
+   - Settings > Pages > Deploy from a branch > main > / (root) > Save
+   - Your site: https://YOUR-USERNAME.github.io/REPO-NAME/
+
+4. ALLOW YOUR SITE IN FIREBASE
+   - Authentication > Settings > Authorized domains > Add domain
+   - Add: YOUR-USERNAME.github.io
+
+5. TEST
+   - Open your GitHub link in an incognito window and follow the
+     "Test before you submit" checklist in README.md
+
+Note: double-clicking index.html will not work. Use the GitHub link, or run
+"python -m http.server" in this folder and open http://localhost:8000
+
+FILES
+  index.html            The app: sign-in, My Tasks, My Account
+  about.html            About page (features, getting started, the creator)
+  privacy.html          Privacy Policy
+  css/style.css         Design (blue, light blue and white)
+  js/app.js             All features (Firebase login + Firestore database)
+  js/firebase-config.js PUT YOUR FIREBASE KEYS HERE
+  images/               Logo (logo.svg) and app icons
+  favicon.ico           Browser tab icon
+  manifest.webmanifest  Name and icon used when saved to a phone's home screen
+  firestore.rules       Database security rules (paste into Firebase)
+  README.md             Full setup guide, feature list, test checklist

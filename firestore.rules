@@ -1,0 +1,61 @@
+rules_version = '2';
+
+// Taskbook security rules
+// Each signed-in user can read and write ONLY their own data:
+//   users/{uid}                 their preferences
+//   users/{uid}/tasks/{taskId}  their tasks
+// Everything else in the database is locked.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // Account preferences
+    match /users/{uid} {
+      allow read, delete: if isOwner(uid);
+
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['prefs', 'updatedAt'])
+        && request.resource.data.prefs is map
+        && request.resource.data.prefs.keys().hasOnly(['dailyGoal', 'focusMin', 'breakMin', 'sound', 'defaultSort', 'hideDone'])
+        && request.resource.data.prefs.dailyGoal is number
+        && request.resource.data.prefs.dailyGoal >= 1 && request.resource.data.prefs.dailyGoal <= 10
+        && request.resource.data.prefs.focusMin is number
+        && request.resource.data.prefs.focusMin >= 5 && request.resource.data.prefs.focusMin <= 90
+        && request.resource.data.prefs.breakMin is number
+        && request.resource.data.prefs.breakMin >= 1 && request.resource.data.prefs.breakMin <= 30
+        && request.resource.data.prefs.sound is bool
+        && request.resource.data.prefs.hideDone is bool
+        && request.resource.data.prefs.defaultSort in ['due', 'pri', 'new'];
+
+      // Tasks
+      match /tasks/{taskId} {
+        allow read, delete: if isOwner(uid);
+
+        allow create, update: if isOwner(uid)
+          && request.resource.data.title is string
+          && request.resource.data.title.size() > 0
+          && request.resource.data.title.size() <= 120
+          && request.resource.data.subject is string
+          && request.resource.data.subject.size() <= 40
+          && request.resource.data.due is string
+          && request.resource.data.priority in ['high', 'medium', 'low']
+          && request.resource.data.done is bool
+          && (!('steps' in request.resource.data)
+              || (request.resource.data.steps is list && request.resource.data.steps.size() <= 30))
+          && (!('focusMins' in request.resource.data)
+              || (request.resource.data.focusMins is number && request.resource.data.focusMins >= 0))
+          && (!('completedAt' in request.resource.data)
+              || request.resource.data.completedAt == null
+              || request.resource.data.completedAt is number);
+      }
+    }
+
+    // Deny everything else by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

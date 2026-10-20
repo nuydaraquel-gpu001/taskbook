@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taskbook — Student Task Organizer</title>
+  <meta name="description" content="Taskbook helps students track assignments by subject, due date and priority, synced across devices.">
+  <meta name="theme-color" content="#1a5fc4">
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="side">
+    <div class="side-inner">
+    <a class="brand" href="index.html"><img src="images/logo.svg" alt="" width="38" height="38">Taskbook</a>
+    <nav class="pages" aria-label="Pages">
+      <a href="#tasks" id="nav-tasks" aria-current="page"><span class="ico ico-tasks" aria-hidden="true"></span><span><span class="hide-sm">My </span>Tasks</span></a>
+      <a href="#account" id="nav-account"><span class="ico ico-user" aria-hidden="true"></span><span><span class="hide-sm">My </span>Account</span></a>
+      <a href="about.html"><span class="ico ico-info" aria-hidden="true"></span>About</a>
+      <a href="privacy.html"><span class="ico ico-shield" aria-hidden="true"></span><span>Privacy<span class="hide-sm"> Policy</span></span></a>
+    </nav>
+    <div class="who" id="who" hidden>
+      <span class="avatar" id="who-avatar" aria-hidden="true"></span>
+      <span class="who-text">
+        <span class="who-name" id="who-name"></span>
+        <span class="who-email" id="who-email"></span>
+      </span>
+      <button type="button" class="small" id="btn-signout">Sign out</button>
+    </div>
+    </div>
+  </aside>
+
+  <div class="content">
+    <main>
+      <div class="offline" id="offline" role="status" hidden>You're offline. Changes you make will sync when you're back online.</div>
+      <p class="loading" id="view-loading">Loading…</p>
+
+      <!-- ============ SIGN IN / SIGN UP ============ -->
+      <section class="auth" id="view-auth" hidden aria-labelledby="auth-title">
+        <div class="auth-intro">
+          <img class="auth-logo" src="images/logo.svg" alt="Taskbook logo" width="64" height="64">
+          <p class="eyebrow">Taskbook · Student Task Organizer</p>
+          <h2>Every assignment in one calm place.</h2>
+          <ul class="perks">
+            <li>Sort tasks by subject, due date and priority</li>
+            <li>Break big projects into small steps</li>
+            <li>Stay on track with a focus timer and daily goal</li>
+            <li>Your tasks sync on your phone and computer</li>
+          </ul>
+        </div>
+
+        <div class="auth-form">
+          <h1 id="auth-title">Sign in to Taskbook</h1>
+          <p id="auth-sub">Welcome back! Enter your details to continue.</p>
+
+          <div class="msg error" id="auth-error" role="alert" hidden></div>
+          <div class="msg info" id="auth-info" role="status" hidden></div>
+
+          <form id="auth-form" novalidate>
+            <div class="field" id="name-field" hidden>
+              <label class="label" for="auth-name">Your name <span class="opt">(optional)</span></label>
+              <input id="auth-name" autocomplete="given-name" maxlength="40" placeholder="What should we call you?">
+            </div>
+            <div class="field">
+              <label class="label" for="auth-email">Email</label>
+              <input id="auth-email" type="email" autocomplete="email" placeholder="you@email.com" required>
+            </div>
+            <div class="field">
+              <label class="label" for="auth-password">Password</label>
+              <div class="pw">
+                <input id="auth-password" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required>
+                <button type="button" class="pw-toggle" data-pw aria-label="Show password">Show</button>
+              </div>
+            </div>
+            <button class="primary" type="submit" id="auth-submit">Sign in</button>
+          </form>
+
+          <button type="button" class="link-btn" id="btn-reset">Forgot your password?</button>
+
+          <div class="divider">or</div>
+          <button type="button" id="btn-google">Continue with Google</button>
+
+          <div class="auth-switch">
+            <span id="switch-text">New to Taskbook?</span>
+            <button type="button" class="link-btn" id="btn-switch">Create an account</button>
+          </div>
+          <p class="fine">By signing up you agree to how we handle your data in the <a href="privacy.html">Privacy Policy</a>. New here? <a href="about.html">Learn about Taskbook</a>.</p>
+        </div>
+      </section>
+
+      <!-- ============ MY TASKS ============ -->
+      <div class="app" id="view-app" hidden>
+        <section class="hello" aria-labelledby="greeting">
+          <div class="hello-top">
+            <div>
+              <p class="eyebrow" id="today-date"></p>
+              <h2 id="greeting">Your assignments</h2>
+              <p class="streak" id="streak"></p>
+            </div>
+            <div class="ring" id="bar" role="progressbar" aria-label="Tasks completed" aria-valuemin="0" aria-valuemax="100"><i id="bar-fill"></i></div>
+          </div>
+          <div class="goal" id="goal"></div>
+          <div class="counts" id="counts"></div>
+        </section>
+
+        <form class="add" id="add-form" autocomplete="off">
+          <h3 class="card-title">Add a task</h3>
+          <div class="add-grid">
+            <div class="field title"><label class="label" for="in-title">Task</label><input id="in-title" required maxlength="120" placeholder="e.g. Finish lab report"></div>
+            <div class="field"><label class="label" for="in-subj">Subject</label><input id="in-subj" maxlength="40" placeholder="e.g. Physics" list="subj-list"></div>
+            <div class="field"><label class="label" for="in-due">Due date</label><input id="in-due" type="date"></div>
+            <div class="field"><label class="label" for="in-pri">Priority</label>
+              <select id="in-pri"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select>
+            </div>
+            <button class="primary" type="submit">+ Add task</button>
+          </div>
+          <datalist id="subj-list"></datalist>
+        </form>
+
+        <section class="week" aria-labelledby="week-title">
+          <div class="week-head">
+            <div>
+              <h3 class="card-title" id="week-title">Next 7 days</h3>
+              <p class="week-note" id="day-note">Tap a day to see only what's due then.</p>
+            </div>
+            <button type="button" class="small" id="btn-ics">Export to calendar</button>
+          </div>
+          <div class="days" id="days"></div>
+        </section>
+
+        <div class="tools">
+          <div class="chips" role="group" aria-label="Filter by status" id="chips"></div>
+          <div class="tools-row">
+            <input class="grow" id="search" type="search" placeholder="Search tasks" aria-label="Search tasks">
+            <select id="f-subj" aria-label="Filter by subject"><option value="">All subjects</option></select>
+            <select id="sort" aria-label="Sort tasks">
+              <option value="due">Sort: due date</option>
+              <option value="pri">Sort: priority</option>
+              <option value="new">Sort: newest</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="hidden-note" id="hidden-note" hidden></p>
+        <ul class="list" id="list" aria-live="polite"></ul>
+      </div>
+
+      <!-- ============ MY ACCOUNT ============ -->
+      <div class="account" id="view-account" hidden>
+        <section class="profile" aria-labelledby="acc-title">
+          <span class="avatar big" id="acc-avatar" aria-hidden="true"></span>
+          <div class="profile-main">
+            <p class="eyebrow">My Account</p>
+            <h1 id="acc-title"></h1>
+            <p class="profile-email"><span id="acc-email"></span> <span class="badge" id="acc-verified"></span></p>
+            <p class="profile-meta" id="acc-meta"></p>
+          </div>
+        </section>
+
+        <div class="msg info verify" id="verify-box" hidden>
+          <span>Please confirm your email address so you can always recover your account.</span>
+          <span class="verify-btns">
+            <button type="button" class="small" id="btn-verify">Send verification email</button>
+            <button type="button" class="small" id="btn-verify-check">I've verified it</button>
+          </span>
+        </div>
+
+        <section class="panel" aria-labelledby="stats-title">
+          <h3 class="card-title" id="stats-title">Your progress</h3>
+          <div class="stats" id="acc-stats"></div>
+        </section>
+
+        <div class="acc-grid">
+          <section class="panel" aria-labelledby="profile-title">
+            <h3 class="card-title" id="profile-title">Profile</h3>
+            <form class="stack" id="name-form">
+              <div class="field">
+                <label class="label" for="acc-name">Display name</label>
+                <input id="acc-name" maxlength="40" placeholder="Your name">
+              </div>
+              <p class="hint">Used to greet you on your tasks page. Leave it empty to use no name.</p>
+              <button type="submit" class="primary">Save name</button>
+            </form>
+          </section>
+
+          <section class="panel" aria-labelledby="security-title">
+            <h3 class="card-title" id="security-title">Password and security</h3>
+            <form class="stack" id="pw-form" hidden>
+              <div class="field">
+                <label class="label" for="acc-cur-pw">Current password</label>
+                <div class="pw"><input id="acc-cur-pw" type="password" autocomplete="current-password"><button type="button" class="pw-toggle" data-pw aria-label="Show password">Show</button></div>
+              </div>
+              <div class="field">
+                <label class="label" for="acc-new-pw">New password</label>
+                <div class="pw"><input id="acc-new-pw" type="password" autocomplete="new-password" minlength="6" placeholder="At least 6 characters"><button type="button" class="pw-toggle" data-pw aria-label="Show password">Show</button></div>
+              </div>
+              <button type="submit" class="primary">Change password</button>
+            </form>
+            <p class="hint" id="google-note" hidden>You sign in with Google, so your password is managed in your Google account.</p>
+            <div class="row-btns">
+              <button type="button" class="small" id="btn-reset-acc" hidden>Email me a reset link</button>
+              <button type="button" class="small" id="btn-signout-2">Sign out</button>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel" aria-labelledby="prefs-title">
+          <h3 class="card-title" id="prefs-title">Preferences</h3>
+          <p class="hint">Saved to your account, so they follow you to every device.</p>
+          <form class="prefs" id="prefs-form">
+            <div class="field">
+              <label class="label" for="p-goal">Daily goal</label>
+              <select id="p-goal">
+                <option value="1">1 task a day</option><option value="2">2 tasks a day</option><option value="3">3 tasks a day</option>
+                <option value="4">4 tasks a day</option><option value="5">5 tasks a day</option><option value="7">7 tasks a day</option><option value="10">10 tasks a day</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="p-focus">Focus session</label>
+              <select id="p-focus"><option value="15">15 minutes</option><option value="25">25 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="50">50 minutes</option></select>
+            </div>
+            <div class="field">
+              <label class="label" for="p-break">Break</label>
+              <select id="p-break"><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="15">15 minutes</option></select>
+            </div>
+            <div class="field">
+              <label class="label" for="p-sort">Sort tasks by</label>
+              <select id="p-sort"><option value="due">Due date</option><option value="pri">Priority</option><option value="new">Newest</option></select>
+            </div>
+            <label class="switch"><input type="checkbox" id="p-sound"><span class="track" aria-hidden="true"></span>Play a sound when the timer ends</label>
+            <label class="switch"><input type="checkbox" id="p-hide"><span class="track" aria-hidden="true"></span>Hide finished tasks from the main list</label>
+            <button type="submit" class="primary">Save preferences</button>
+          </form>
+        </section>
+
+        <section class="panel" aria-labelledby="data-title">
+          <h3 class="card-title" id="data-title">Your data</h3>
+          <p>Your tasks are stored in your Taskbook account and only you can see them. You can download a copy or delete everything at any time.</p>
+          <div id="wipe-area"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site">
+      <span>Taskbook · Student Task Organizer</span>
+      <span class="foot-links"><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a></span>
+    </footer>
+  </div>
+</div>
+
+<!-- ============ FOCUS TIMER ============ -->
+<section class="focus" id="focus" hidden aria-label="Focus timer">
+  <div class="focus-head">
+    <span class="eyebrow" id="focus-label">Focus session</span>
+    <button type="button" class="link-btn" id="focus-close">Close</button>
+  </div>
+  <p class="focus-task" id="focus-task"></p>
+  <div class="focus-time" id="focus-time" aria-live="off">25:00</div>
+  <div class="focus-modes" role="group" aria-label="Timer length">
+    <button type="button" class="chip" data-mode="focus" aria-pressed="true">Focus</button>
+    <button type="button" class="chip" data-mode="break" aria-pressed="false">Break</button>
+  </div>
+  <div class="focus-btns">
+    <button type="button" class="primary" id="focus-start">Start</button>
+    <button type="button" id="focus-reset">Reset</button>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status"><span id="toast-msg"></span><button type="button" id="toast-btn" hidden>Undo</button></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

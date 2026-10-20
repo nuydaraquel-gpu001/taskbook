@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — Taskbook</title>
+  <meta name="description" content="About Taskbook, a free student task organizer for assignments, due dates and study sessions.">
+  <meta name="theme-color" content="#1a5fc4">
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="side-inner">
+    <a class="brand" href="index.html"><img src="images/logo.svg" alt="" width="38" height="38">Taskbook</a>
+    <nav class="pages" aria-label="Pages">
+      <a href="index.html#tasks"><span class="ico ico-tasks" aria-hidden="true"></span><span><span class="hide-sm">My </span>Tasks</span></a>
+      <a href="index.html#account"><span class="ico ico-user" aria-hidden="true"></span><span><span class="hide-sm">My </span>Account</span></a>
+      <a href="about.html" aria-current="page"><span class="ico ico-info" aria-hidden="true"></span>About</a>
+      <a href="privacy.html"><span class="ico ico-shield" aria-hidden="true"></span><span>Privacy<span class="hide-sm"> Policy</span></span></a>
+    </nav>
+    </div>
+  </aside>
+
+  <div class="content">
+    <main>
+      <div class="about">
+
+        <!-- Intro -->
+        <section class="about-hero" aria-labelledby="about-title">
+          <img class="about-logo" src="images/logo.svg" alt="Taskbook logo" width="84" height="84">
+          <div class="about-hero-text">
+            <p class="eyebrow">About Taskbook</p>
+            <h1 id="about-title">A calm, simple planner made for students.</h1>
+            <p>Taskbook helps you keep track of every assignment, project and reading in one place. You can see what's due today, plan the week ahead, and focus on one task at a time. It's free, it works on your phone and computer, and your tasks are private to your account.</p>
+            <div class="row-btns">
+              <a class="btn primary" href="index.html">Open Taskbook</a>
+              <a class="btn" href="#features">See the features</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Why -->
+        <section class="panel about-why" aria-labelledby="why-title">
+          <h2 id="why-title" class="card-title">Why Taskbook?</h2>
+          <p>Students juggle many subjects at once, and deadlines are easy to lose in notebooks, group chats and memory. Taskbook brings them together, shows what needs attention first, and turns big assignments into small steps you can actually finish.</p>
+        </section>
+
+        <!-- Features -->
+        <section class="about-section" id="features" aria-labelledby="features-title">
+          <h2 id="features-title" class="section-title">What you can do</h2>
+          <div class="feature-grid">
+            <article class="feature"><span class="f-ico ico ico-tasks" aria-hidden="true"></span>
+              <h3>Organize assignments</h3>
+              <p>Add tasks with a subject, due date and priority. Filter, search and sort them in seconds.</p></article>
+            <article class="feature"><span class="f-ico ico ico-steps" aria-hidden="true"></span>
+              <h3>Break tasks into steps</h3>
+              <p>Split big projects into small steps and watch the progress bar fill up as you go.</p></article>
+            <article class="feature"><span class="f-ico ico ico-timer" aria-hidden="true"></span>
+              <h3>Focus timer</h3>
+              <p>Work in focused sessions with short breaks. Taskbook keeps count of the minutes you spend on each task.</p></article>
+            <article class="feature"><span class="f-ico ico ico-calendar" aria-hidden="true"></span>
+              <h3>Plan your week</h3>
+              <p>See how busy the next 7 days are, and export due dates to Google Calendar, Apple Calendar or Outlook.</p></article>
+            <article class="feature"><span class="f-ico ico ico-flame" aria-hidden="true"></span>
+              <h3>Goals and streaks</h3>
+              <p>Set a daily goal and build a streak by finishing at least one task every day.</p></article>
+            <article class="feature"><span class="f-ico ico ico-sync" aria-hidden="true"></span>
+              <h3>Sync on every device</h3>
+              <p>Sign in on your phone, laptop or a school computer and your tasks are already there.</p></article>
+          </div>
+        </section>
+
+        <!-- How to start -->
+        <section class="panel" aria-labelledby="start-title">
+          <h2 id="start-title" class="card-title">Getting started</h2>
+          <ol class="start-steps">
+            <li><b>Create an account</b><span>Sign up with your email or continue with Google. It takes less than a minute.</span></li>
+            <li><b>Add your assignments</b><span>Type what's due, pick the subject and due date, and set a priority.</span></li>
+            <li><b>Work through your list</b><span>Start a focus session, check off steps, and mark tasks done to keep your streak going.</span></li>
+          </ol>
+        </section>
+
+        <div class="about-two">
+          <!-- Privacy promise -->
+          <section class="panel" aria-labelledby="privacy-title">
+            <h2 id="privacy-title" class="card-title">Your privacy</h2>
+            <p>Your tasks can only be seen by you. Taskbook has no ads, doesn't sell your data, and doesn't track you. You can download or delete everything at any time from <b>My Account</b>.</p>
+            <a href="privacy.html">Read the Privacy Policy</a>
+          </section>
+
+          <!-- Built with -->
+          <section class="panel" aria-labelledby="built-title">
+            <h2 id="built-title" class="card-title">How it's built</h2>
+            <p>Taskbook is written in HTML, CSS and JavaScript.</p>
+            <ul class="tags">
+              <li>HTML, CSS, JavaScript</li>
+              <li>Firebase Authentication</li>
+              <li>Cloud Firestore</li>
+              <li>GitHub Pages</li>
+            </ul>
+            <p class="hint">Firebase handles sign-in and stores your tasks. GitHub Pages hosts the website.</p>
+          </section>
+        </div>
+
+        <!-- Creator -->
+        <!-- TODO: replace the placeholders in square brackets with your own details -->
+        <section class="panel creator" aria-labelledby="creator-title">
+          <!-- Creator photo: save your photo as images/creator.jpg (square works best).
+               If the file is missing, a person icon is shown instead. -->
+          <img class="creator-photo" src="creator.jpg" alt="Photo of [Your Name]" width="120" height="120"
+               onerror="this.hidden = true; this.nextElementSibling.hidden = false;">
+          <span class="avatar big" aria-hidden="true" hidden><span class="ico ico-user"></span></span>
+          <div class="creator-text">
+            <p class="eyebrow">About the creator</p>
+            <h2 id="creator-title">Raquel A. Nuyda</h2>
+            <p class="creator-meta">2BsCPE-B · Pamantasan ng Cabuyao · 2026</p>
+            <p>Taskbook was built as a final project to help fellow students stay organized and less stressed about deadlines. Feedback and ideas are always welcome.</p>
+            <p class="creator-meta">Contact: nuydaraquel19@gmail.com</p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="site">
+      <span>Taskbook · Student Task Organizer</span>
+      <span class="foot-links"><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a></span>
+    </footer>
+  </div>
+</div>
+</body>
+</html>
